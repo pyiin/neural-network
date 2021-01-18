@@ -1,11 +1,11 @@
 #pragma once
 
 class NeuralNetwork {
-    
+
     private:
     struct node {
         double value;
-        double baias;
+        double baias;// bias is only in vertices, not nodes
     };
     int layers_num;
     int edges_num;

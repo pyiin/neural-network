@@ -1,7 +1,8 @@
 #include "neural-network.h"
 
 class NeuralNetwork {
-    
+// This is obsolete
+   /*
     private:
     struct node {
         double value;
@@ -15,6 +16,7 @@ class NeuralNetwork {
     double* edges_weight;
 
     public:
+    */
     void generateNew(int new_layers_num, int* new_layers_sizes) {
         layers_num = new_layers_num;
         layers_sizes = new int[layers_num];
