@@ -29,7 +29,7 @@
         nodes = new node[nodes_num];
         edges_weight = new double[edges_num];
     }
-/*    double NeuralNetwork::getNodeValue(int, int);
+/*  double NeuralNetwork::getNodeValue(int, int);
     void NeuralNetwork::setNodeBaias(int, int, double);
     void NeuralNetwork::setEdgeWeight(int, int, int, double);
 */
