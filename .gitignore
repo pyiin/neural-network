@@ -33,3 +33,8 @@
 
 # VSCode configuration
 .vscode
+build
+
+# Visual Studio build folder "out"
+out
+.vs

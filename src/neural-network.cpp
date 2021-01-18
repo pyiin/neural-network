@@ -1,6 +1,5 @@
 #include "neural-network.h"
 
-class NeuralNetwork {
 // This is obsolete
    /*
     private:
@@ -17,7 +16,7 @@ class NeuralNetwork {
 
     public:
     */
-    void generateNew(int new_layers_num, int* new_layers_sizes) {
+    void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
         layers_num = new_layers_num;
         layers_sizes = new int[layers_num];
         for(int layer = 0; layer < layers_num; layer++) {
@@ -30,7 +29,7 @@ class NeuralNetwork {
         nodes = new node[nodes_num];
         edges_weight = new double[edges_num];
     }
-    double getNodeValue(int, int);
-    void setNodeBaias(int, int, double);
-    void setEdgeWeight(int, int, int, double);
-};
+/*    double NeuralNetwork::getNodeValue(int, int);
+    void NeuralNetwork::setNodeBaias(int, int, double);
+    void NeuralNetwork::setEdgeWeight(int, int, int, double);
+*/
