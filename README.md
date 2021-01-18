@@ -1,4 +1,4 @@
 # Neural network
-Small project to test power of neural network
+Small project to test power of neural network.
 
-Currently work in progress
+Currently work in progress.
