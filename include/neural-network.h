@@ -5,7 +5,7 @@ class NeuralNetwork {
     private:
     struct node {
         double value;
-        double baias;// bias is only in vertices, not nodes
+        double baias;
     };
     int layers_num;
     int edges_num;
