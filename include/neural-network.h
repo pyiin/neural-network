@@ -7,15 +7,15 @@ class NeuralNetwork {
 	double derivative;
     };
     struct edge {
-	double weight;
-	double derivative;
+        double weight;
+        double derivative;
     };
     int layers_num;
     int edges_num;
     int nodes_num;
     int* layers_sizes;
     node* nodes;
-    edge* edges_weight;
+    edge* edges;
 
     public:
     void generateNew(int, int*);
@@ -23,5 +23,6 @@ class NeuralNetwork {
     double getNodeValue(int, int);
     void setNodeBaias(int, int, double);
     void setEdgeWeight(int, int, int, double);
+    void gradient();
 
 };
