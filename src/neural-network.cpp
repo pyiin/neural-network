@@ -35,20 +35,29 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
 }
 
 double NeuralNetwork::evaluate(double* input, double* output) {
-    int k = 0;
-    for(i = 1; i < layers_num; i++){
-        k += layers_sizes[i-1];
-        for(int j=0; j < layers_sizes[i]; j++){
-            for(int l=0; l < layers_sizes[i-1]; l++){
-                nodes[k+j].value += edges_weight[l*layers_sizes[i-1] + i] * nodes[k - layers_sizes[i-1] + l].value;
+    for(int node = 0; node < layers_sizes[0]; node++){
+        nodes[node].value = input[node];
+    }
+    
+    int node_offset = 0;
+    int edge_offset = 0;
+    for(int layer = 0; layer < layers_num - 1; layer++) {
+        for(int node = node_offset; node < node_offset + layers_sizes[layer]; node++) {
+            for(int edge = 0; edge < layers_sizes[layer + 1]; edge++) {
+                nodes[node_offset + layers_sizes[layer] + edge].value += edges_weight[edge_offset + edge] * nodes[node].value;
             }
-            nodes[k+j].value += nodes[k+j].bias;
-            nodes[k+j].value = sigmoid(nodes[k+j].value);
+            edge_offset += layers_sizes[layer + 1];
+        }
+        node_offset += layers_sizes[layer];
+        for(int node = node_offset; node < node_offset + layers_sizes[layer + 1]; node++) {
+            nodes[node].value += nodes[node].bias;
+            nodes[node].value = sigmoid(nodes[node].value);
         }
     }
     double ans = 0;
-    for(int i = 0; i < layers_sizes[layers_num]){
-        ans += (nodes[k + i] - output[i])*(nodes[k + i] - output[i]);
+    node_offset = nodes_num - layers_sizes[layers_num - 1];
+    for(int node = 0; node < layers_sizes[layers_num - 1]; node++){
+        ans += pow(nodes[node_offset + node].value - output[node], 2);
     }
     return ans;
 }

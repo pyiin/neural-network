@@ -3,7 +3,7 @@ class NeuralNetwork {
     private:
     struct node {
         double value;
-        double baias;
+        double bias;
     };
     int layers_num;
     int edges_num;
