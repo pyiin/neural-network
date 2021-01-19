@@ -1,3 +1,4 @@
+#include <math.h>
 #include "neural-network.h"
 
 // This is obsolete
@@ -16,6 +17,9 @@
 
     public:
     */
+double sigmoid(double x){
+    return 1/(1 + exp(x));
+}
 void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
     layers_num = new_layers_num;
     layers_sizes = new int[layers_num];
@@ -30,9 +34,10 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
     edges_weight = new double[edges_num];
 }
 
-double NeuralNetwork::evaluate(double* input) {
-    int k = layers_sizes[0];
+double NeuralNetwork::evaluate(double* input, double* output) {
+    int k = 0;
     for(i = 1; i < layers_num; i++){
+        k += layers_sizes[i-1];
         for(int j=0; j < layers_sizes[i]; j++){
             for(int l=0; l < layers_sizes[i-1]; l++){
                 nodes[k+j].value += edges_weight[l*layers_sizes[i-1] + i] * nodes[k - layers_sizes[i-1] + l].value;
@@ -41,6 +46,11 @@ double NeuralNetwork::evaluate(double* input) {
             nodes[k+j].value = sigmoid(nodes[k+j].value);
         }
     }
+    double ans = 0;
+    for(int i = 0; i < layers_sizes[layers_num]){
+        ans += (nodes[k + i] - output[i])*(nodes[k + i] - output[i]);
+    }
+    return ans;
 }
 
 double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
