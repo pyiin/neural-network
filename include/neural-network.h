@@ -4,13 +4,18 @@ class NeuralNetwork {
     struct node {
         double value;
         double bias;
+	double derivative;
+    };
+    struct edge {
+	double weight;
+	double derivative;
     };
     int layers_num;
     int edges_num;
     int nodes_num;
     int* layers_sizes;
     node* nodes;
-    double* edges_weight;
+    edge* edges_weight;
 
     public:
     void generateNew(int, int*);
