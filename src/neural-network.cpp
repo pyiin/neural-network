@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <cstring>
 #include "neural-network.h"
 
 
@@ -55,7 +56,7 @@ void NeuralNetwork::gradient() { // don't f**king touch it PJ
     int L = 0;
     for(; L < layers_num - 1; offset += layers_sizes[L], edge_offset+=layers_sizes[L]*layers_sizes[++L]); // L = layers_num - 1
     for(int k = 0; k<layers_sizes[L]; k++){ // last layer is special
-        nodes[offset + k].derivative += 2*(nodes[offset + k] - expected_out[k]); //derivative - magic
+        nodes[offset + k].derivative += 2*(nodes[offset + k].value - expected_out[k]); //derivative - magic
     }
 
     for(L--; L>=0; L++){ //every other layer
@@ -63,9 +64,9 @@ void NeuralNetwork::gradient() { // don't f**king touch it PJ
         edge_offset -= layers_sizes[L]*layers_sizes[L+1];
         for(int k = 0; k<layers_sizes[L]; k++){ // loop over a^(L)_k
             for(int k_next = 0; k < layers_sizes[L + 1]; k_next++){
-                node_next = offset + layers_sizes[L] + k_next;
-                nodes[offset + k].derivative += nodes[node_next].derivative * nodes[node_next] * (nodes[node_next]-1)* edges[edge_offset + k*layers_sizes[L+1] + k_next].weight;
-                edge[edge_offset + k*layers_sizes[L+1] + k_next].derivative += nodes[node_next].derivative * nodes[k+offset].value;
+                int node_next = offset + layers_sizes[L] + k_next;
+                nodes[offset + k].derivative += nodes[node_next].derivative * nodes[node_next].value * (nodes[node_next].value - 1)* edges[edge_offset + k*layers_sizes[L+1] + k_next].weight;
+                edges[edge_offset + k*layers_sizes[L+1] + k_next].derivative += nodes[node_next].derivative * nodes[k+offset].value;
             }
         }
     }
@@ -74,20 +75,20 @@ void NeuralNetwork::gradient() { // don't f**king touch it PJ
 void NeuralNetwork::applyGradient(double constant) {
     int offset = 0;
     int edge_offset = 0;
-    for(; L < layers_num - 1; offset += layers_sizes[L], edge_offset+=layers_sizes[L]*layers_sizes[++L]); // L = layers_num - 1
+    for(int L = 0; L < layers_num - 1; offset += layers_sizes[L], edge_offset+=layers_sizes[L]*layers_sizes[++L]); // L = layers_num - 1
     offset += layers_sizes[layers_num-1];
     for(;offset>=0;--offset){
-        node[offset].bias += node[offset].derivative;
-        node[offset].derivative = 0;
+        nodes[offset].bias += nodes[offset].derivative;
+        nodes[offset].derivative = 0;
     }
     for(;edge_offset>=0;--edge_offset){
-        edge[edge_offset].weight += edge[edge_offset].derivative;
-        edge[edge_offset].derivative = 0;
+        edges[edge_offset].weight += edges[edge_offset].derivative;
+        edges[edge_offset].derivative = 0;
     }
 }
 
 
-void NeuralNetwork::batch(int n, int** inputs, int** outputs) { //remember to use safely -> inputs[n][layers_num[0]]; output[n][layers_num[layers_sizes-1]];
+void NeuralNetwork::batch(int n, double** inputs, double** outputs) { //remember to use safely -> inputs[n][layers_num[0]]; output[n][layers_num[layers_sizes-1]];
     for(int i=0; i<n; i++){
         evaluate(*(inputs+i), *(outputs+i));
         gradient();
@@ -96,7 +97,7 @@ void NeuralNetwork::batch(int n, int** inputs, int** outputs) { //remember to us
 }
 
 double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
-
+    return 69;
 }
 void NeuralNetwork::setNodeBaias(int, int, double) {
 
