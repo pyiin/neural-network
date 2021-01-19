@@ -71,6 +71,30 @@ void NeuralNetwork::gradient() { // don't f**king touch it PJ
     }
 }
 
+void NeuralNetwork::applyGradient(double constant) {
+    int offset = 0;
+    int edge_offset = 0;
+    for(; L < layers_num - 1; offset += layers_sizes[L], edge_offset+=layers_sizes[L]*layers_sizes[++L]); // L = layers_num - 1
+    offset += layers_sizes[layers_num-1];
+    for(;offset>=0;--offset){
+        node[offset].bias += node[offset].derivative;
+        node[offset].derivative = 0;
+    }
+    for(;edge_offset>=0;--edge_offset){
+        edge[edge_offset].weight += edge[edge_offset].derivative;
+        edge[edge_offset].derivative = 0;
+    }
+}
+
+
+void NeuralNetwork::batch(int n, int** inputs, int** outputs) { //remember to use safely -> inputs[n][layers_num[0]]; output[n][layers_num[layers_sizes-1]];
+    for(int i=0; i<n; i++){
+        evaluate(*(inputs+i), *(outputs+i));
+        gradient();
+    }
+    applyGradient(1);//to change
+}
+
 double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
 
 }

@@ -25,5 +25,7 @@ class NeuralNetwork {
     void setNodeBaias(int, int, double);
     void setEdgeWeight(int, int, int, double);
     void gradient();
+    void applyGradient(double constant);
+    void batch(int n, int** inputs, int** outputs);
 
 };
