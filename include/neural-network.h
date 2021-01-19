@@ -2,19 +2,19 @@ class NeuralNetwork {
 
     private:
     struct node {
-        double value;
-        double bias;
+        double value = 0;
+        double bias = 0;
 	double derivative;
     };
     struct edge {
-        double weight;
-        double derivative;
+        double weight = 0;
+        double derivative = 0;
     };
-    int layers_num;
-    int edges_num;
-    int nodes_num;
-    int* layers_sizes;
-    int* expected_out;
+    int layers_num = 0;
+    int edges_num = 0;
+    int nodes_num = 0;
+    int* layers_sizes  = 0;
+    int* expected_out = 0;
     node* nodes;
     edge* edges;
 

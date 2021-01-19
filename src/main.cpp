@@ -6,10 +6,10 @@ using std::endl;
 
 int main() {
 	NeuralNetwork NNN;
-	int layers[3] = {3, 5, 3};
-	double input[3] = {3, 5, 3};
-	double output[3] = {3, 5, 3};
-	NNN.generateNew(3, layers);
+	int layers[2] = {3, 3};
+	double input[3] = {1, 1, 1};
+	double output[3] = {1, 1, 1};
+	NNN.generateNew(2, layers);
 	cout << NNN.evaluate(input, output) << endl;
 	
 	return 0;

@@ -22,7 +22,7 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
 }
 
 double NeuralNetwork::evaluate(double* input, double* output) {
-    memcpy(expected_out, output, layers_sizes[layers_num-1]);
+    //memcpy(expected_out, output, layers_sizes[layers_num-1]);
     for(int node = 0; node < layers_sizes[0]; node++){
         nodes[node].value = input[node];
     }
