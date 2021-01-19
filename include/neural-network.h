@@ -14,6 +14,7 @@ class NeuralNetwork {
     int edges_num;
     int nodes_num;
     int* layers_sizes;
+    int* expected_out;
     node* nodes;
     edge* edges;
 

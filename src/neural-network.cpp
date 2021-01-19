@@ -1,22 +1,8 @@
+#pragma once
 #include <math.h>
 #include "neural-network.h"
 
-// This is obsolete
-   /*
-    private:
-    struct node {
-        double value;
-        double baias;
-    };
-    int layers_num;
-    int edges_num;
-    int nodes_num;
-    int* layers_sizes;
-    node* nodes;
-    double* edges; //12, 13, 14, 15, ..., 21, 22, 23, 24
 
-    public:
-    */
 double sigmoid(double x){
     return 1/(1 + exp(x));
 }
@@ -35,6 +21,7 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
 }
 
 double NeuralNetwork::evaluate(double* input, double* output) {
+    memcpy(expected_out, output, layers_sizes[layers_num-1]);
     for(int node = 0; node < layers_sizes[0]; node++){
         nodes[node].value = input[node];
     }
@@ -62,6 +49,28 @@ double NeuralNetwork::evaluate(double* input, double* output) {
     return ans;
 }
 
+void NeuralNetwork::gradient() { // don't f**king touch it PJ
+    int offset = 0;
+    int edge_offset = 0;
+    int L = 0;
+    for(; L < layers_num - 1; offset += layers_sizes[L], edge_offset+=layers_sizes[L]*layers_sizes[++L]); // L = layers_num - 1
+    for(int k = 0; k<layers_sizes[L]; k++){ // last layer is special
+        nodes[offset + k].derivative += 2*(nodes[offset + k] - expected_out[k]); //derivative - magic
+    }
+
+    for(L--; L>=0; L++){ //every other layer
+        offset -= layers_sizes[L];
+        edge_offset -= layers_sizes[L]*layers_sizes[L+1];
+        for(int k = 0; k<layers_sizes[L]; k++){ // loop over a^(L)_k
+            for(int k_next = 0; k < layers_sizes[L + 1]; k_next++){
+                node_next = offset + layers_sizes[L] + k_next;
+                nodes[offset + k].derivative += nodes[node_next].derivative * nodes[node_next] * (nodes[node_next]-1)* edges[edge_offset + k*layers_sizes[L+1] + k_next].weight;
+                edge[edge_offset + k*layers_sizes[L+1] + k_next].derivative += nodes[node_next].derivative * nodes[k+offset].value;
+            }
+        }
+    }
+}
+
 double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
 
 }
@@ -69,9 +78,5 @@ void NeuralNetwork::setNodeBaias(int, int, double) {
 
 }
 void NeuralNetwork::setEdgeWeight(int, int, int, double) {
-
-}
-
-void NeuralNetwork::gradient() {
 
 }

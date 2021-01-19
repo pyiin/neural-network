@@ -38,3 +38,4 @@ build
 # Visual Studio build folder "out"
 out
 .vs
+tags
