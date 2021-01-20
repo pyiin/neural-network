@@ -3,6 +3,7 @@
 
 using std::cout;
 using std::endl;
+using std::cin;
 
 int main() {
 	NeuralNetwork NNN;
@@ -12,5 +13,10 @@ int main() {
 	NNN.generateNew(2, layers);
 	cout << NNN.evaluate(input, output) << endl;
 	
+	//following might be usefull for Release version
+	/*
+	int useless;
+	cin >> useless;
 	return 0;
+	//*/
 }
