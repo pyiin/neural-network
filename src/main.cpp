@@ -1,4 +1,5 @@
-#include "neural-network.h"
+//#include "neural-network.h"
+#include "nnmanager.h"
 #include <iostream>
 
 using std::cout;

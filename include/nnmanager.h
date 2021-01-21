@@ -1,6 +1,7 @@
 //Batch class header file
 
-#include <neural-network.h>
+#pragma once
+#include "neural-network.h"
 
 class NNManager{
 
@@ -12,8 +13,8 @@ public:
 
 private:
 	NeuralNetwork NN;
-	int* input;
-	int* output;
+	double* input;
+	double* output;
 	int batch_size;
 	int in_size;
 	int out_size;

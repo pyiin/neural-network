@@ -1,5 +1,8 @@
+#pragma once
 #include <cstdio>
+#include <stdlib.h>
 #include "nnmanager.h"
+#define max(a,b) (a>b?a:b)
 
 NNManager::NNManager(int n_layers, int* layers){
 	NN.generateNew(n_layers, layers);
@@ -12,9 +15,9 @@ void NNManager::learnBatch(int size){
 	batch_size = size <= 0 ? batch_size : size; //avilable_IO
 	for(int i=0; i < size && IO_index < avilable_IO; i++, IO_index++){
 		NN.evaluate(input + IO_index*in_size, output + IO_index*out_size);
-		NN.gradient;
+		NN.gradient();
 	}
-	applyGradient(1.0/size);
+	NN.applyGradient(1.0/size);
 }
 
 int NNManager::genIO(int n_tests){
@@ -22,8 +25,8 @@ int NNManager::genIO(int n_tests){
 		return 0;
 	avilable_IO = n_tests;
 	IO_index = 0;
-	input = new int[n_tests * in_size];
-	output = new int[n_tests * out_size];
+	input = new double[n_tests * in_size];
+	output = new double[n_tests * out_size];
 	for(int i = 0; i < n_tests; i++){
 		double m = 0.0;
 		for(int j = 0; j < in_size; j++){

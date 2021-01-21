@@ -1,7 +1,7 @@
 #pragma once
+#include "neural-network.h"
 #include <math.h>
 #include <cstring>
-#include "neural-network.h"
 
 
 double sigmoid(double x){
