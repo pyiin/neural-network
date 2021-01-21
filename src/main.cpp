@@ -6,13 +6,12 @@ using std::endl;
 using std::cin;
 
 int main() {
-	NeuralNetwork NNN;
-	int layers[2] = {3, 3};
-	double input[3] = {1, 1, 1};
-	double output[3] = {1, 1, 1};
-	NNN.generateNew(2, layers);
-	cout << NNN.evaluate(input, output) << endl;
-	
+	int layers[3] = {3, 3, 3};
+	NNManager NM(3, layers);
+	NM.genIO(100);
+	NM.learnBatch(100);
+	NM.testNN(57);
+
 	//following might be usefull for Release version
 	/*
 	int useless;

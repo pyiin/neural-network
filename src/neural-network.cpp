@@ -19,10 +19,18 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
     }
     nodes = new node[nodes_num];
     edges = new edge[edges_num];
+    for(int i=0; i<edges_num; i++){
+	edges[i].derivative = 0;
+    }
+    for(int i=0; i<nodes_num; i++){
+	nodes[i].derivative = 0;
+    }
 }
 
 double NeuralNetwork::evaluate(double* input, double* output) {
-    //memcpy(expected_out, output, layers_sizes[layers_num-1]);
+    for(int i = 0; i<layers_sizes[layers_num-1]; i++){
+        expected_out[i] = output[i];
+    }
     for(int node = 0; node < layers_sizes[0]; node++){
         nodes[node].value = input[node];
     }
@@ -87,21 +95,22 @@ void NeuralNetwork::applyGradient(double constant) {
     }
 }
 
-
-void NeuralNetwork::batch(int n, double** inputs, double** outputs) { //remember to use safely -> inputs[n][layers_num[0]]; output[n][layers_num[layers_sizes-1]];
-    for(int i=0; i<n; i++){
-        evaluate(*(inputs+i), *(outputs+i));
-        gradient();
-    }
-    applyGradient(1);//to change
-}
-
-double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
-    return 69;
-}
-void NeuralNetwork::setNodeBaias(int, int, double) {
-
-}
-void NeuralNetwork::setEdgeWeight(int, int, int, double) {
-
-}
+// {{{
+//void NeuralNetwork::batch(int n, double** inputs, double** outputs) { //remember to use safely -> inputs[n][layers_num[0]]; output[n][layers_num[layers_sizes-1]];
+//    for(int i=0; i<n; i++){
+//        evaluate(*(inputs+i), *(outputs+i));
+//        gradient();
+//    }
+//    applyGradient(1);//to change
+//}
+//
+//double NeuralNetwork::getNodeValue(int layer_n, int layer_k) {
+//    return 69;
+//}
+//void NeuralNetwork::setNodeBaias(int, int, double) {
+//
+//}
+//void NeuralNetwork::setEdgeWeight(int, int, int, double) {
+//
+//}
+//}}}
