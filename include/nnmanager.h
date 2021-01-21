@@ -1,4 +1,4 @@
-//Batch class header file
+//NN manager class header file
 
 #pragma once
 #include "neural-network.h"
