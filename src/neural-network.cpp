@@ -2,6 +2,7 @@
 #include "neural-network.h"
 #include <math.h>
 #include <cstring>
+#include <cstdio>
 
 
 double sigmoid(double x){
@@ -28,6 +29,21 @@ void NeuralNetwork::generateNew(int new_layers_num, int* new_layers_sizes) {
     }
 }
 
+double NeuralNetwork::echo() {
+	int N = 0;
+	int E = 0;
+	N += layers_sizes[0];
+	for(int i=1; i<layers_num; i++){
+		N += layers_sizes[i];
+		E += layers_sizes[i] * layers_sizes[i-1];
+	}
+	for(int i=0; i<E; i++){
+		printf("%lf %lf\n", edges[i].weight, edges[i].derivative);
+	}
+	for(int i=0; i<N; i++){
+		printf("%lf %lf %lf\n", nodes[i].bias, nodes[i].value, nodes[i].derivative);
+	}
+}
 double NeuralNetwork::evaluate(double* input, double* output) {
     for(int i = 0; i<layers_sizes[layers_num-1]; i++){
         expected_out[i] = output[i];

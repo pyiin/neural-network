@@ -11,12 +11,15 @@ int main() {
 	NNManager NM(3, layers);
 	NM.genIO(100);
 	NM.learnBatch(100);
-	NM.testNN(57);
+	//for(int i=0; i<100; i++){
+	//	NM.testNN(i);
+	//}
+	NM.testNN(59);
 
 	//following might be usefull for Release version
 	/*
 	int useless;
 	cin >> useless;
 	return 0;
-	//*/
+	*/
 }

@@ -17,7 +17,7 @@ void NNManager::learnBatch(int size){
 		NN.evaluate(input + IO_index*in_size, output + IO_index*out_size);
 		NN.gradient();
 	}
-	NN.applyGradient(1.0/size);
+	NN.applyGradient(1.0/(double)(size));
 }
 
 int NNManager::genIO(int n_tests){
@@ -41,5 +41,6 @@ int NNManager::genIO(int n_tests){
 }
 
 void NNManager::testNN(int test_num){
-	printf("%d\n", NN.evaluate(input + in_size*test_num, output + out_size*test_num));
+	printf("%lf\n", NN.evaluate(input + in_size*test_num, output + out_size*test_num));
+	NN.echo();
 }

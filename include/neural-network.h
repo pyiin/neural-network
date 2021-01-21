@@ -21,6 +21,7 @@ class NeuralNetwork {
     public:
     void generateNew(int, int*);
     double evaluate(double* input, double* output);
+    double echo();
     //double getNodeValue(int, int);
     //void setNodeBaias(int, int, double);
     //void setEdgeWeight(int, int, int, double);
